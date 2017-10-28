@@ -1,17 +1,25 @@
 package com.chrhsmt.atami.service
 
 import com.chrhsmt.atami.entity.User
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.repository.CrudRepository
-import org.springframework.stereotype.Repository
+import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.rest.core.annotation.RepositoryRestResource
+import org.springframework.data.rest.core.annotation.RestResource
 
 /**
- * TODO: Crudを制限したい
+ *
  */
-@Repository
-interface UserRepository : CrudRepository<User, Long>{
+@RepositoryRestResource(collectionResourceRel = "users", path = "users")
+interface UserRepository : PagingAndSortingRepository<User, Long> {
 
-    fun findAll(pageable: Pageable): Page<User>
+//    fun findAll(pageable: Pageable): Page<User>
     fun save(user: User): User
+
+    @RestResource(exported = false)
+    override fun deleteById(id: Long)
+    @RestResource(exported = false)
+    override fun delete(entity: User)
+    @RestResource(exported = false)
+    override fun deleteAll(entities: Iterable<User>)
+    @RestResource(exported = false)
+    override fun deleteAll()
 }
