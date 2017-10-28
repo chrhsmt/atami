@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    build: "./containers/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'app'
+      TZ: 'Asia/Tokyo'
+    ports:
+      - 3306:3306
+  app:
+    build: .
+    # environment:
+      # - GRADLE_HOME=/gradle_cache/gradle
+      # - GRADLE_FOLDER=/gradle_cache/.gradle
+      # - GRADLE_VERSION=4.2.1
+      # - GRADLE_USER_HOME=/gradle_cache/.gradle
+    command: bash start.sh
+    volumes:
+      - gradle_cache:/root/.gradle
+      - .:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+volumes:
+  gradle_cache:
