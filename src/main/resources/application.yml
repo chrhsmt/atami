@@ -1,0 +1,14 @@
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://db/atami_local
+        username: atami
+        password: atami_pass
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: true
+        hibernate:
+          ddl-auto: none
+    data:
+        rest:
+            base-path: /api

@@ -2,7 +2,12 @@ version: '3'
 services:
   db:
     build: "./containers/mysql"
+    volumes:
+      - ./containers/mysql/init-scripts:/docker-entrypoint-initdb.d
     environment:
+      MYSQL_DATABASE: 'atami_local'
+      MYSQL_USER: 'atami'
+      MYSQL_PASSWORD: 'atami_pass'
       MYSQL_ROOT_PASSWORD: 'app'
       TZ: 'Asia/Tokyo'
     ports:
@@ -14,7 +19,7 @@ services:
       # - GRADLE_FOLDER=/gradle_cache/.gradle
       # - GRADLE_VERSION=4.2.1
       # - GRADLE_USER_HOME=/gradle_cache/.gradle
-    command: bash start.sh
+    command: ./gradlew bootRun #bash start.sh
     volumes:
       - gradle_cache:/root/.gradle
       - .:/app
@@ -22,6 +27,10 @@ services:
       - 8080:8080
     depends_on:
       - db
+  # booAppRun:
+  #   extends:
+  #     service: app
+  #   command: ./gradlew bootRun
 
 volumes:
   gradle_cache:
