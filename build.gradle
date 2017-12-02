@@ -9,11 +9,17 @@ buildscript {
 		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("org.springframework:springloaded:1.2.8.RELEASE")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework:springloaded:1.2.8.RELEASE")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath('mysql:mysql-connector-java:8.0.8-dmr')
+        classpath('org.yaml:snakeyaml:1.19')
 	}
+}
+
+plugins {
+    id 'org.liquibase.gradle' version '1.2.4'
 }
 
 apply plugin: 'kotlin'
@@ -60,9 +66,26 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	compile('mysql:mysql-connector-java:8.0.8-dmr')
-	compile('org.flywaydb:flyway-core:4.2.0')
+//	compile('org.flywaydb:flyway-core:4.2.0')
+	compile('org.liquibase:liquibase-core:3.5.3')
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+liquibase {
+    activities {
+        main {
+            driver 'com.mysql.cj.jdbc.Driver'
+            changeLogFile 'src/main/resources/db/changelog/db.changelog-master'
+            url 'jdbc:mysql://localhost:3306/atami_local?nullNamePatternMatchesAll=true'
+            username 'atami'
+            password 'atami_pass'
+        }
+    }
+
+    // runList = project.ext.runList
+    // runList = 'main'
+    // runList = 'main'
 }

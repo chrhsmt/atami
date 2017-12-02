@@ -1,0 +1,72 @@
+databaseChangeLog:
+- changeSet:
+    id: 1512207106534-2
+    author: chihiro (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: NOW(6)
+            name: updated_at
+            type: TIMESTAMP(6)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: NOW(6)
+            name: created_at
+            type: TIMESTAMP(6)
+        tableName: users
+- changeSet:
+    id: 1512207106534-3
+    author: chihiro (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: word
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueNumeric: 1
+            name: count
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: NOW(6)
+            name: updated_at
+            type: TIMESTAMP(6)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: NOW(6)
+            name: created_at
+            type: TIMESTAMP(6)
+        tableName: words
